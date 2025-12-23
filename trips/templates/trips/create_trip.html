@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tạo chuyến đi mới</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #56ccf2, #2f80ed);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            width: 100%;
+            background: #fff;
+        }
+
+        .card-header {
+            background: #2f80ed;
+            color: white;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .btn-create {
+            background-color: #2f80ed;
+            color: #fff;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            padding: 0.75rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-create:hover {
+            background-color: #1c60b3;
+            transform: translateY(-2px);
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .is-invalid {
+            border: 2px solid #dc3545 !important;
+            background-color: #ffe6e6;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: fixed; top: 10px; left: 20px; color: white; font-weight: 600; font-size: 1.1rem;">
+        Xin chào {{ driver_name }} 👋
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            🚗 Khởi tạo chuyến đi mới
+        </div>
+        <div class="card-body p-4">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="customer_name" class="form-label">Tên khách hàng</label>
+                    <input type="text" name="customer_name" id="customer_name" class="form-control"
+                        placeholder="Nhập tên khách hàng" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Số điện thoại khách</label>
+                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Nhập số điện thoại"
+                        pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="num_people" class="form-label">Số người đi</label>
+                    <!-- <input type="number" name="num_people" id="num_people" class="form-control" min="1" max="10"
+                        value="1" required> -->
+                    <select name="num_people" id="num_people" class="form-select" required>
+                        <option value="1">1 người</option>
+                        <option value="2">2 người</option>
+                        <option value="3">3 người</option>
+                        <option value="4">4 người</option>
+                        <option value="5">5 người</option>
+                        <option value="6">6 người</option>
+                        <option value="bao_xe">Bao xe</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pickup_location" class="form-label">Địa điểm đón khách</label>
+                    <input type="text" name="pickup_location" id="pickup_location" class="form-control"
+                        placeholder="Nhập địa điểm đón khách" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dropoff_location" class="form-label">Địa điểm trả khách</label>
+                    <input type="text" name="dropoff_location" id="dropoff_location" class="form-control"
+                        placeholder="Nhập địa điểm trả khách" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pickup_time" class="form-label">Thời điểm đón khách</label>
+                    <input type="datetime-local" name="pickup_time" id="pickup_time" class="form-control" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="status" class="form-label">Trạng thái chuyến đi</label>
+                    <select name="status" id="status" class="form-select" required>
+                        <option value="Đang chờ tài xế">Đang chờ tài xế</option>
+                        <option value="Đã nhận tài xế">Đã nhận tài xế</option>
+                        <option value="Kết thúc chuyến đi">Kết thúc chuyến đi</option>
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-create">
+                        🚀 Khởi tạo chuyến đi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ✅ Script kiểm tra form -->
+    <script>
+        document.querySelector("form").addEventListener("submit", function (event) {
+            const requiredFields = [
+                "customer_name",
+                "phone",
+                "num_people",
+                "pickup_location",
+                "dropoff_location",
+                "pickup_time",
+                "status"
+            ];
+
+            let isValid = true;
+            let missing = [];
+
+            requiredFields.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el.value.trim()) {
+                    el.classList.add("is-invalid");
+                    isValid = false;
+                    missing.push(el.previousElementSibling.textContent);
+                } else {
+                    el.classList.remove("is-invalid");
+                }
+            });
+
+            if (!isValid) {
+                event.preventDefault();
+                alert("⚠️ Vui lòng điền đầy đủ các thông tin bắt buộc:\n" + missing.join(", "));
+            }
+        });
+    </script>
+</body>
+
+</html>
