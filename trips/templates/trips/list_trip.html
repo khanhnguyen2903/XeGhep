@@ -166,7 +166,10 @@
         </form>
     </div>
     <!-- Nút Home -->
+    {% if driver_name == 'admin' %}
     <a href="{% url 'home' %}" class="btn-home">🏠 Home</a>
+    {% endif %}
+
     <div class="container">
         <!-- 🔹 Nút Tạo chuyến đi mới -->
         <div class="text-center mb-4">

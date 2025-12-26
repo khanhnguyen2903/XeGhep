@@ -4,7 +4,9 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 
 def home(request):
-    return render(request, 'main/home.html')
+    # 🔹 Lấy thông tin tài xế từ session
+    driver_name = request.session.get('driver_name', 'Tài xế')
+    return render(request, 'main/home.html', {"driver_name": driver_name})
 
 def manage_coin(request):
     ref = db.reference('driver')
