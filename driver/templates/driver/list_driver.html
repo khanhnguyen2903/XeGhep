@@ -68,16 +68,37 @@
             margin: 0 5px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 576px) {
+
+            .container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+                margin-bottom: 20px;
+            }
+
             table {
-                font-size: 14px;
+                font-size: 0.85rem;
+            }
+
+            th,
+            td {
+                padding: 8px 6px;
+                white-space: nowrap;
+            }
+
+            .btn-add {
+                margin-bottom: 15px;
             }
 
             .btn-home {
-                top: 10px;
-                left: 10px;
-                padding: 8px 16px;
-                font-size: 14px;
+                top: 12px;
+                left: 12px;
+                padding: 8px 14px;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -92,7 +113,7 @@
         <h2>🚘 Danh sách tài xế</h2>
 
         <div class="btn-add">
-            <a href="{% url 'add_driver' %}" class="btn btn-primary btn-lg">➕ Thêm tài xế mới</a>
+            <a href="{% url 'add_driver' %}" class="btn btn-primary btn-lg w-100 w-md-auto">➕ Thêm tài xế mới</a>
         </div>
 
         {% if drivers %}
@@ -128,9 +149,10 @@
                             <span class="badge bg-secondary">Ngưng</span>
                             {% endif %}
                         </td>
-                        <td class="action-btns">
-                            <a href="{% url 'edit_driver' d.id %}" class="btn btn-warning btn-sm">✏️ Sửa</a>
-                            <a href="{% url 'delete_driver' d.id %}" class="btn btn-danger btn-sm"
+                        <td class="action-btns d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a href="{% url 'edit_driver' d.id %}" class="btn btn-warning btn-sm w-100 w-md-auto">✏️
+                                Sửa</a>
+                            <a href="{% url 'delete_driver' d.id %}" class="btn btn-danger btn-sm w-100 w-md-auto"
                                 onclick="return confirm('Bạn có chắc muốn xóa tài xế này không?');">🗑️ Xóa</a>
                         </td>
                     </tr>
