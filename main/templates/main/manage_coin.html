@@ -88,6 +88,35 @@
             border-radius: 20px;
             font-size: 0.9rem;
         }
+
+        @media (max-width: 576px) {
+            .btn-home {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+                top: 15px;
+                left: 15px;
+            }
+
+            .container-box {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+                margin-bottom: 20px;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th,
+            td {
+                padding: 8px 6px;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 
@@ -117,11 +146,12 @@
                         <td>{{ d.coin }}</td>
                         <td>
                             {% if d.coin > 100 %}
-                            <a href="{% url 'calculate_payout' d.phone %}" class="btn btn-success btn-action">
+                            <a href="{% url 'calculate_payout' d.phone %}"
+                                class="btn btn-success btn-action w-100 w-md-auto mb-2 mb-md-0">
                                 Tính tiền nhận
                             </a>
                             {% elif d.coin < 100 %} <a href="{% url 'calculate_payment' d.phone %}"
-                                class="btn btn-danger btn-action">
+                                class="btn btn-danger btn-action w-100 w-md-auto mb-2 mb-md-0">
                                 Tính tiền nộp
                                 </a>
                                 {% else %}
